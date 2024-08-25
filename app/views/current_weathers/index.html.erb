@@ -2,15 +2,63 @@
 
 <% content_for :title, "Current weathers" %>
 
-<h1>Current weathers</h1>
+<div class="flex flex-col ">
 
-<div id="current_weathers">
+<div class="card border border-solid text-white">
+  <div id="current-weather" class="m-0 p-0 border-0 align-baseline block bg-zinc-600 " >
+
+    <div id="weather-header" class="pt-5 pl-5 pr-5 pb-2.5 border-0 m-0 block" >
+      <div class="flex flex-row justify-between items-center" >
+        <div id="weather-current-status" >
+          <h1 class="text-2xl font-bold" >
+            Mostly Cloudly
+          </h1>
+        </div>
+        <div>
+          <%= link_to "C°", "", class: "underline" %> <%= link_to "F°", "", class: "text-gray-400 " %>
+        </div>
+      </div>
+      <div id="weather-location" class="w-full text-sm " >
+        Oaxaca, Mexico
+      </div>
+    </div>
+    
+    <div id="hourly-weather" class="pt-0 pr-5 pb-2.5 pl-5 block" >
+      <div class="flex justify-between w-full -mb-1 " >
+        <div class="-ml-1 text-center block ">
+          <div class="text-sm pt-0 ">4 PM</div>
+          <div class="w-8 h-8 mt-1 mr-0 mb-0 ml-0 align-top ">Icon</div>
+          <div class=" min-h-5 text-sm text-blue-400 ">
+            <div class="mr-1 w-2.5 h-2.5 max-w-full text-center ">Icon</div>
+            <span class=" m-0 p-0 border-0 align-baseline text-center " >10%<span>
+          </div>
+          <div class="font-semibold text-4xl relative left-1 block">25°</div>
+        </div>
+      </div>
+      <div class=" flex w-full items-center mt-1 font-normal text-sm m-0 p-0 border-0 align-baseline " >
+        <span class="mr-3 align-baseline" >Humidity: <strong>48</strong>%</span>
+        <span class="mr-3 align-baseline" >Wind: <strong>3 MPH S</strong></span>
+      </div>
+    </div>
+    
+
+    
+  </div>
+</div>
+
+<div>
   <% @current_weathers.each do |current_weather| %>
-    <%= render current_weather %>
-    <p>
-      <%= link_to "Show this current weather", current_weather %>
-    </p>
+    <div class="m-12">
+      <%= render current_weather %>
+    </div>
+    <div class="m-12">
+      <%= link_to "Show this current weather", current_weather, class: "btn-primary rounded " %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New current weather", new_current_weather_path %>
+<div class="m-12" >
+  <%= link_to "New current weather", new_current_weather_path, class: "btn-primary m-12" %>
+</div>
+
+</div>
