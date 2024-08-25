@@ -1,0 +1,12 @@
+<% content_for :title, "Editing current weather" %>
+
+<h1>Editing current weather</h1>
+
+<%= render "form", current_weather: @current_weather %>
+
+<br>
+
+<div>
+  <%= link_to "Show this current weather", @current_weather %> |
+  <%= link_to "Back to current weathers", current_weathers_path %>
+</div>

@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Current weathers" %>
+
+<h1>Current weathers</h1>
+
+<div id="current_weathers">
+  <% @current_weathers.each do |current_weather| %>
+    <%= render current_weather %>
+    <p>
+      <%= link_to "Show this current weather", current_weather %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New current weather", new_current_weather_path %>

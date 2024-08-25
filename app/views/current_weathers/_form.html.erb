@@ -1,0 +1,27 @@
+<%= form_with(model: current_weather) do |form| %>
+  <% if current_weather.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(current_weather.errors.count, "error") %> prohibited this current_weather from being saved:</h2>
+
+      <ul>
+        <% current_weather.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :latitude, style: "display: block" %>
+    <%= form.text_field :latitude %>
+  </div>
+
+  <div>
+    <%= form.label :longitude, style: "display: block" %>
+    <%= form.text_field :longitude %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
