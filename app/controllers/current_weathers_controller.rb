@@ -1,6 +1,12 @@
 class CurrentWeathersController < ApplicationController
   before_action :set_current_weather, only: %i[ show edit update destroy ]
 
+  def dashboard
+    params[:latitude] = 58.102709
+    params[:longitude] = -105.7139
+    @current_weather = CurrentWeather.by_location(params[:latitude], params[:longitude])
+  end
+
   # GET /current_weathers or /current_weathers.json
   def index
     @current_weathers = CurrentWeather.all
