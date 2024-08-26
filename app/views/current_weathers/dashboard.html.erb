@@ -3,7 +3,7 @@
 <% content_for :title, "Current weathers" %>
 
 <div class="flex items-center justify-center">
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col w-full max-w-fit">
 
     <!-- Search box -->
     <div class="min-w-full my-4">
@@ -35,16 +35,16 @@
         <div id="weather-header" class="pt-5 pl-5 pr-5 pb-2.5 border-0 m-0 block" >
           <div class="flex flex-row justify-between items-start" >
             <div id="weather-current-status" >
-              <h1 class="text-2xl font-bold" >
+              <h1 class="text-3xl font-bold" >
                 <%= @current_weather.weather_main unless @current_weather.nil? %>
               </h1>
             </div>
             <div class="text-xs mt-2 flex flex-col items-end" >
-              <div>Min: <%= @current_weather.temp_min.round unless @current_weather.nil? %></div>
-              <div>Max: <%= @current_weather.temp_max.round unless @current_weather.nil? %></div>
+              <div>Min: <%= @current_weather.temp_min.round unless @current_weather.nil? %>°</div>
+              <div>Max: <%= @current_weather.temp_max.round unless @current_weather.nil? %>°</div>
             </div>
           </div>
-          <div id="weather-location" class="w-full text-sm">
+          <div id="weather-location" class="w-full text-base">
             <% if @current_weather && @current_weather.name %>
               <%= @current_weather.name unless @current_weather.nil? %>
             <% else %>
@@ -62,7 +62,7 @@
             <%= weather_icon(@current_weather.icon) unless @current_weather.nil? %>
           </div>
           <div class="ml-5">
-            <div class="text-7xl" >
+            <div class="text-7xl flex flex-row items-end" >
               <%= @current_weather.temperature.round unless @current_weather.nil? %>
               <span class="text-3xl" >F°</span>
             </div>
@@ -81,29 +81,7 @@
             Wind Speed: <%= @current_weather.wind_speed unless @current_weather.nil? %>
           </div>
         </div>
-
-        <!-- hourly weather
-        <div id="hourly-weather" class="pt-0 pr-5 pb-2.5 pl-5 block" >
-          <div class="flex justify-between w-full -mb-1 " >
-            <div class="-ml-1 text-center block ">
-              <div class="text-sm pt-0 ">4 PM</div>
-              <div class="w-8 h-8 mt-1 mr-0 mb-0 ml-0 align-top ">Icon</div>
-              <div class=" min-h-5 text-sm text-blue-400 ">
-                <div class="mr-1 w-2.5 h-2.5 max-w-full text-center ">Icon</div>
-                <span class=" m-0 p-0 border-0 align-baseline text-center " >10%<span>
-              </div>
-              <div class="font-semibold text-4xl relative left-1 block">25°</div>
-            </div>
-          </div>
-          <div class=" flex w-full items-center mt-1 font-normal text-sm m-0 p-0 border-0 align-baseline " >
-            <span class="mr-3 align-baseline" >Humidity: <strong>48</strong>%</span>
-            <span class="mr-3 align-baseline" >Wind: <strong>3 MPH S</strong></span>
-          </div>
-        </div>
-        -->
-        
         
       </div>
     </div>
-
   </div>
