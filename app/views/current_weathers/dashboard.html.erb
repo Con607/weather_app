@@ -2,56 +2,108 @@
 
 <% content_for :title, "Current weathers" %>
 
-<div class="flex flex-col ">
+<div class="flex items-center justify-center">
+  <div class="flex flex-col w-full">
 
-<div class="card border border-solid text-white">
-  <div id="current-weather" class="m-0 p-0 border-0 align-baseline block bg-zinc-600 " >
+    <!-- Search box -->
+    <div class="min-w-full my-4">
+      <h1 class="font-bold text-3xl mb-4 text-white">Search by location</h1>
+      <div data-controller="geolocation">
+        <%= form_with url: dashboard_current_weathers_url, method: :get do %>
+          <div class="relative">
+            <%= text_field_tag :city, nil, 
+                class: "px-6 py-3 rounded border border-gray-300/80 focus:ring-4 focus:ring-gray-200/60 focus:outline-none w-full rounded-full text-lg", 
+                placeholder: "Search city", 
+                data: { geolocation_target: 'searchWeather' } %>
 
-    <div id="weather-header" class="pt-5 pl-5 pr-5 pb-2.5 border-0 m-0 block" >
-      <div class="flex flex-row justify-between items-center" >
-        <div id="weather-current-status" >
-          <h1 class="text-2xl font-bold" >
-            <%= @current_weather.weather_main %>
-          </h1>
-        </div>
-        <div>
-          <%= link_to "C°", "", class: "underline" %> <%= link_to "F°", "", class: "text-gray-400 " %>
-        </div>
-      </div>
-      <div id="weather-location" class="w-full text-sm " >
-        <% if @current_weather.name %>
-          <%= @current_weather.name %>
-        <% else %>
-          Lat: <%= @current_weather.latitude %>, Long: <%= @current_weather.longitude %>
-        <% end %>
-        <p>
-          <%= @current_weather.country %>
-        </p>
-      </div>
-    </div>
-    
-    <div id="hourly-weather" class="pt-0 pr-5 pb-2.5 pl-5 block" >
-      <div class="flex justify-between w-full -mb-1 " >
-        <div class="-ml-1 text-center block ">
-          <div class="text-sm pt-0 ">4 PM</div>
-          <div class="w-8 h-8 mt-1 mr-0 mb-0 ml-0 align-top ">Icon</div>
-          <div class=" min-h-5 text-sm text-blue-400 ">
-            <div class="mr-1 w-2.5 h-2.5 max-w-full text-center ">Icon</div>
-            <span class=" m-0 p-0 border-0 align-baseline text-center " >10%<span>
+            <button type="submit" class="absolute top-1.5 right-2 bg-white rounded-full px-5 py-2 border border-gray-300/80 shadow-sm bg-gray-50/50 hover:bg-gray-50">Search</button>
           </div>
-          <div class="font-semibold text-4xl relative left-1 block">25°</div>
-        </div>
-      </div>
-      <div class=" flex w-full items-center mt-1 font-normal text-sm m-0 p-0 border-0 align-baseline " >
-        <span class="mr-3 align-baseline" >Humidity: <strong>48</strong>%</span>
-        <span class="mr-3 align-baseline" >Wind: <strong>3 MPH S</strong></span>
+        <% end %>
+
+        <button type="button" data-action="click->geolocation#handleClick" class="underline font-medium mt-2 text-white">
+          <span>Find my location</span>
+        </button>
       </div>
     </div>
-    
-    
-  </div>
-</div>
 
-<div class="text-white" >
-  <%= @current_weather.inspect %>
-</div>
+
+    <!-- Current weather -->
+    <div class="card text-white shadow-sm shadow-neutral-400">
+      <div id="current-weather" class="m-0 p-0 border-0 align-baseline block bg-zinc-600 rounded" >
+
+        <!-- Weather header -->
+        <div id="weather-header" class="pt-5 pl-5 pr-5 pb-2.5 border-0 m-0 block" >
+          <div class="flex flex-row justify-between items-start" >
+            <div id="weather-current-status" >
+              <h1 class="text-2xl font-bold" >
+                <%= @current_weather.weather_main unless @current_weather.nil? %>
+              </h1>
+            </div>
+            <div class="text-xs mt-2 flex flex-col items-end" >
+              <div>Min: <%= @current_weather.temp_min.round unless @current_weather.nil? %></div>
+              <div>Max: <%= @current_weather.temp_max.round unless @current_weather.nil? %></div>
+            </div>
+          </div>
+          <div id="weather-location" class="w-full text-sm">
+            <% if @current_weather && @current_weather.name %>
+              <%= @current_weather.name unless @current_weather.nil? %>
+            <% else %>
+              Lat: <%= @current_weather.latitude unless @current_weather.nil? %>, Long: <%= @current_weather.longitude unless @current_weather.nil? %>
+            <% end %>
+            <p>
+              <%= @current_weather.country unless @current_weather.nil? %>
+            </p>
+          </div>
+        </div>
+
+        <!-- Weather body -->
+        <div class="flex items-center mr-4 justify-around" >
+          <div class="pb-2">
+            <%= weather_icon(@current_weather.icon) unless @current_weather.nil? %>
+          </div>
+          <div class="ml-5">
+            <div class="text-7xl" >
+              <%= @current_weather.temperature.round unless @current_weather.nil? %>
+              <span class="text-3xl" >F°</span>
+            </div>
+            <div class="ml-2" >
+              Real Feel: <%= @current_weather.feels_like.round unless @current_weather.nil? %>°
+            </div>
+          </div>
+        </div>
+
+        <!-- Weather footer -->
+        <div class="flex items-center justify-around pb-4" >
+          <div class="">
+            Humidity: <%= @current_weather.humidity unless @current_weather.nil? %>
+          </div>
+          <div class="">
+            Wind Speed: <%= @current_weather.wind_speed unless @current_weather.nil? %>
+          </div>
+        </div>
+
+        <!-- hourly weather
+        <div id="hourly-weather" class="pt-0 pr-5 pb-2.5 pl-5 block" >
+          <div class="flex justify-between w-full -mb-1 " >
+            <div class="-ml-1 text-center block ">
+              <div class="text-sm pt-0 ">4 PM</div>
+              <div class="w-8 h-8 mt-1 mr-0 mb-0 ml-0 align-top ">Icon</div>
+              <div class=" min-h-5 text-sm text-blue-400 ">
+                <div class="mr-1 w-2.5 h-2.5 max-w-full text-center ">Icon</div>
+                <span class=" m-0 p-0 border-0 align-baseline text-center " >10%<span>
+              </div>
+              <div class="font-semibold text-4xl relative left-1 block">25°</div>
+            </div>
+          </div>
+          <div class=" flex w-full items-center mt-1 font-normal text-sm m-0 p-0 border-0 align-baseline " >
+            <span class="mr-3 align-baseline" >Humidity: <strong>48</strong>%</span>
+            <span class="mr-3 align-baseline" >Wind: <strong>3 MPH S</strong></span>
+          </div>
+        </div>
+        -->
+        
+        
+      </div>
+    </div>
+
+  </div>

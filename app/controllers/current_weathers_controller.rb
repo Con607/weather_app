@@ -2,9 +2,21 @@ class CurrentWeathersController < ApplicationController
   before_action :set_current_weather, only: %i[ show edit update destroy ]
 
   def dashboard
-    params[:latitude] = 58.102709
-    params[:longitude] = -105.7139
-    @current_weather = CurrentWeather.by_location(params[:latitude], params[:longitude])
+    if params[:city]
+      @current_weather = CurrentWeather.by_city(params[:city])
+    elsif params[:latitude] && params[:longitude]
+      @current_weather = CurrentWeather.by_location(params[:latitude], params[:longitude])
+    end
+
+    respond_to do |format|
+      format.html
+      # format.turbo_stream
+    end
+  end
+
+  def geolocation
+    location = Geocoder.search([params[:latitude], params[:longitude]]).first
+    render json: location.data
   end
 
   # GET /current_weathers or /current_weathers.json

@@ -60,3 +60,4 @@ end
 gem "tailwindcss-rails", "~> 2.7"
 
 gem 'httparty'
+gem "geocoder", "~> 1.8"
