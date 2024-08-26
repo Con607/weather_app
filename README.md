@@ -1,24 +1,33 @@
-# README
+# Weather App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Basic weather app that connects to Open Weather and retrieves the current weather from your current location or from a city by name.
 
-Things you may want to cover:
+## Ruby version
+`3.2.2`
 
-* Ruby version
+## How to start in development
+Just run 
+```
+bundle install
+```
+Then run the migrations 
+```
+rails db:migrate
+```
+Then start the server
+```
+bin/dev
+```
 
-* System dependencies
+## How to use
+- To start just click on `Find my location` link
+  - It should populate the search field with the name of your city
+  - Press the search button so it retrieves the weather from that location
+- You can also type the name of a city on the search box
+  - The search box does not have autocomplete or any search for cities
+  - Type the name of the city and if found it will display the weather on that location
 
-* Configuration
 
-* Database creation
+Note: The data gets saved in the database and everytime you try to fetch the same record it wont retrieve it from Open Weather anymore, unless the record was last fetched an hour ago.
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
