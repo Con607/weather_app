@@ -5,6 +5,19 @@ class CurrentWeathersControllerTest < ActionDispatch::IntegrationTest
     @current_weather = current_weathers(:one)
   end
 
+  test 'should get dashboard' do
+    get dashboard_current_weathers_url
+    assert_response :success
+  end
+
+  test 'should get geolocation' do
+    response = OpenStruct.new(first: OpenStruct.new(data: { city: 'New York' }) )
+    Geocoder.stub(:search, response) do
+      post geolocation_current_weathers_url, params: { latitude: 1, longitude: 2 }
+    end
+    assert_response :success
+  end
+
   test "should get index" do
     get current_weathers_url
     assert_response :success

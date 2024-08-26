@@ -19,12 +19,12 @@ export default class extends Controller {
   }
 
   getLocation(position) {
-    console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+    // console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
 
     // Send the data to the server
     const url = "geolocation";
     const data = { latitude: position.coords.latitude, longitude: position.coords.longitude };
-    console.log(data);
+    // console.log(data);
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     fetch(url, {
@@ -37,7 +37,7 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.properties.city) {
         this.searchWeatherTarget.value = data.properties.city;
       }
