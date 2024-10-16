@@ -58,7 +58,7 @@ group :test do
   gem 'webmock'
 end
 
-gem "tailwindcss-rails", "~> 2.7"
+gem "tailwindcss-rails", "~> 3.0"
 
 gem 'httparty'
 gem "geocoder", "~> 1.8"
